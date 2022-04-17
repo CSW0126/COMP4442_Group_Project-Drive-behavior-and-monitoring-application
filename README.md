@@ -3,6 +3,11 @@
 1. Install [Anaconda](https://www.anaconda.com/)
 2. Click Environment > Create > tick Python 3.10.4
 
+Activate environment ("COMP4442" is your environment name)
+```
+conda activate COMP4442
+```
+
 Check Python version
 ```
 Python -V
@@ -23,3 +28,23 @@ install package from requirements.txt in conda
 conda install --yes --file requirements.txt
 ```
  
+Run: ("COMP4442" is your environment name)
+```
+conda activate COMP4442
+cd FlaskApp
+python main.py
+```
+
+ Folder structure
+
+
+    .
+    ├── detail-record               # data set
+    ├── FlaskApp                    # Folder for Flask app code
+    │   ├── website                 # website source code
+    │   │      ├── static           # All css/js/images put here
+    │   │      ├── templates        # All html files put here
+    │   │      ├── __init__.py      # Flask init code
+    │   │      └── views.py         # URL route define code
+    │   └── main.py                 # main.py
+    └── ...
