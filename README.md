@@ -39,6 +39,12 @@ python main.py
 
 
     .
+    ├── data-after-spark            # data after running the AWS EMR
+    ├── DB                          # data set
+    │    ├── initDB.sql             # query to create database and table 
+    │    ├── Spark_aws_EMR.py       # Spark code on AWS EMR
+    │    ├── spark_colab.ipynb      # Spark code on Google Colab (for testing,debug etc)
+    │    └── upload_data_to_DB.py   # read the data-after-spark and upload to DB
     ├── detail-record               # data set
     ├── FlaskApp                    # Folder for Flask app code
     │   ├── website                 # website source code
