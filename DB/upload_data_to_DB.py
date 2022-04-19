@@ -4,6 +4,7 @@
 # password: 12345678
 # database: comp4442-group-project
 
+# use initDB.sql before run this script
 
 import mysql.connector
 import numpy as np
