@@ -6,6 +6,7 @@
 
 
 import mysql.connector
+import numpy as np
 import pandas as pd
 
 host = "comp4442-group-project.coa9uj3ys1py.us-east-1.rds.amazonaws.com"
@@ -13,38 +14,75 @@ user = "admin"
 password = "12345678"
 port = 3306
 database = "comp4442-group-project"
+sql = "INSERT INTO DrivingRecords (DriverID,\
+                                   CarPlateNumber,\
+                                   recordDAY,\
+                                   recordHour,\
+                                   isRapidlySpeedup,\
+                                   isRapidlySlowdown,\
+                                   isNeutralSlide,\
+                                   isNeutralSlideFinished,\
+                                   neutralSlideTime,\
+                                   isOverspeed,\
+                                   isOverspeedFinished,\
+                                   overspeedTime,\
+                                   isFatigueDriving,\
+                                   isHthrottleStop,\
+                                   isOilLeak) \
+                                   values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+sql_delete_All_rows = "DELETE FROM DrivingRecords;"
+sql_reset_auto_increment = "ALTER TABLE DrivingRecords AUTO_INCREMENT = 1;"
 
 
-def upload_data_to_DB():
+def connection():
     # connect to database
-    # mydb = mysql.connector.connect(
-    #     host=host,
-    #     user=user,
-    #     passwd=password,
-    #     database=database,
-    #     port=port
-    # )
+    conn = mysql.connector.connect(
+        host=host,
+        user=user,
+        passwd=password,
+        database=database,
+        port=port
+    )
 
+    return conn
+
+
+
+def main():
     #data frames list
-    dfs = []
+    df = pd.read_csv("../data-after-spark/data.csv", header=None)
+    df = df.replace({np.nan: None})
 
-    # read data from csv file
-    #df1 = pd.read_csv(f"../detail-records/detail_record_2017_01_02_08_00_00")
-    #df2 = pd.read_csv(f"../detail-records/detail_record_2017_01_03_08_00_00")
-    #df3 = pd.read_csv(f"../detail-records/detail_record_2017_01_04_08_00_00")
-    #df4 = pd.read_csv(f"../detail-records/detail_record_2017_01_05_08_00_00")
-    #df5 = pd.read_csv(f"../detail-records/detail_record_2017_01_06_08_00_00")
-    #df6 = pd.read_csv(f"../detail-records/detail_record_2017_01_07_08_00_00")
-    #df7 = pd.read_csv(f"../detail-records/detail_record_2017_01_08_08_00_00")
-    #df8 = pd.read_csv(f"../detail-records/detail_record_2017_01_09_08_00_00")
-    #df9 = pd.read_csv(f"../detail-records/detail_record_2017_01_10_08_00_00")
-    #df10 = pd.read_csv(f"../detail-records/detail_record_2017_01_11_08_00_00")
 
+    db_conn = connection()
+    cursor = db_conn.cursor()
+    
+    # delete all rows before insert new data
+    cursor.execute(sql_delete_All_rows)
+    db_conn.commit()
+    print("delete all rows before insert new data")
+
+    # reset auto increment
+    cursor.execute(sql_reset_auto_increment)
+    db_conn.commit()
+    print("reset auto increment to 1")
+
+    # insert data to database
+    print("insert data to database:")
+    # for each row in data frame
+    for index, rows in df.iterrows():
+        data = rows.tolist()
+        print("Process: [{}/{}]".format(index+1, len(df)))
+        cursor.execute(sql, data)
+        db_conn.commit()
+
+    cursor.close()
+    db_conn.close()
 
 
     
     # print(df)
 
 if __name__ == "__main__":
-    upload_data_to_DB()
+    main()
 

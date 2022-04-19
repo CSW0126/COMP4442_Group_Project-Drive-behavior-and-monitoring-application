@@ -1,26 +1,22 @@
 CREATE DATABASE IF NOT EXISTS `comp4442-group-project`;
 USE `comp4442-group-project`;
 
-/* CREATE TABLE IF NOT EXISTS `DrivingRecords`(
-    ReportID                INT             NOT NULL        AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `DrivingRecords`(
+    RecordID                INT             NOT NULL        AUTO_INCREMENT,
     DriverID                VARCHAR(40)     NOT NULL,
     CarPlateNumber          VARCHAR(40)     NOT NULL,
-    Latitude                DOUBLE          NOT NULL,
-    Longtitude              DOUBLE          NOT NULL,
-    Speed                   DOUBLE          NOT NULL,
-    Direction               DOUBLE          NOT NULL,
-    SiteName                VARCHAR(50)     DEFAULT NULL,
-    ReportTime              DATETIME        NOT NULL,
-    isRapidlySpeedup        BOOLEAN         DEFAULT NULL,
-    isRapidlySlowdown       BOOLEAN         DEFAULT NULL,
-    isNeutralSlide          BOOLEAN         DEFAULT NULL,
-    isNeutralSlideFinished  BOOLEAN         DEFAULT NULL,
-    neutralSlideTime        INT             DEFAULT NULL,
-    isOverspeed             BOOLEAN         DEFAULT NULL,
-    isOverspeedFinished     BOOLEAN         DEFAULT NULL,
-    overspeedTime           INT             DEFAULT NULL,
-    isFatigueDriving        BOOLEAN         DEFAULT NULL,
-    isHthrottleStop         BOOLEAN         DEFAULT NULL,
-    isOilLeakage            BOOLEAN         DEFAULT NULL,
-    PRIMARY KEY (ReportID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; */
+    recordDAY               DATETIME        NOT NULL,
+    recordHour              TIME            NOT NULL,
+    isRapidlySpeedup        DOUBLE          DEFAULT NULL,
+    isRapidlySlowdown       DOUBLE          DEFAULT NULL,
+    isNeutralSlide          DOUBLE          DEFAULT NULL,
+    isNeutralSlideFinished  DOUBLE          DEFAULT NULL,
+    neutralSlideTime        DOUBLE          DEFAULT NULL,
+    isOverspeed             DOUBLE          DEFAULT NULL,
+    isOverspeedFinished     DOUBLE          DEFAULT NULL,
+    overspeedTime           DOUBLE          DEFAULT NULL,
+    isFatigueDriving        DOUBLE          DEFAULT NULL,
+    isHthrottleStop         DOUBLE          DEFAULT NULL,
+    isOilLeak               DOUBLE          DEFAULT NULL,  
+    PRIMARY KEY (RecordID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
