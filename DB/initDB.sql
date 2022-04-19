@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `DrivingRecords`(
     DriverID                VARCHAR(40)     NOT NULL,
     CarPlateNumber          VARCHAR(40)     NOT NULL,
     recordDAY               DATETIME        NOT NULL,
-    recordHour              TIME            NOT NULL,
+    recordHour              INT             NOT NULL,
     isRapidlySpeedup        DOUBLE          DEFAULT NULL,
     isRapidlySlowdown       DOUBLE          DEFAULT NULL,
     isNeutralSlide          DOUBLE          DEFAULT NULL,

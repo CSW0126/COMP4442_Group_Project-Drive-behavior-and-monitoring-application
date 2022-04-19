@@ -61,21 +61,24 @@ def main():
     # delete all rows before insert new data
     cursor.execute(sql_delete_All_rows)
     db_conn.commit()
-    print("delete all rows before insert new data")
+    print("Delete all rows before insert new data")
 
     # reset auto increment
     cursor.execute(sql_reset_auto_increment)
     db_conn.commit()
-    print("reset auto increment to 1")
+    print("Reset auto increment to 1")
 
     # insert data to database
-    print("insert data to database:")
+    print("Insert data to database")
+
+    dataList = []
     # for each row in data frame
     for index, rows in df.iterrows():
         data = rows.tolist()
-        print("Process: [{}/{}]".format(index+1, len(df)))
-        cursor.execute(sql, data)
-        db_conn.commit()
+        dataList.append(data)
+        # print("Process: [{}/{}]".format(index+1, len(df)))
+    cursor.executemany(sql, dataList)
+    db_conn.commit()
 
     cursor.close()
     db_conn.close()
