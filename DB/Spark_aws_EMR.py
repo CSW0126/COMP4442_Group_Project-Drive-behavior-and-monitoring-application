@@ -1,17 +1,6 @@
-# example inp and out
-# s3://comp4442-group-project/data/
-# s3://comp4442-group-project/output
-
-import os
-import sys
-
-
 from pyspark import SparkContext, SQLContext, Row
 from pyspark.sql.types import *
-from pyspark.sql.functions import lit
 
-# args = sys.argv
-# out = args[1]
 
 out = "s3://comp4442-group-project/output/"
 
