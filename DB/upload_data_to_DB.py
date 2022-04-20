@@ -6,15 +6,10 @@
 
 # use initDB.sql before run this script
 
-import mysql.connector
+from connection import connection
 import numpy as np
 import pandas as pd
 
-host = "comp4442-group-project.coa9uj3ys1py.us-east-1.rds.amazonaws.com"
-user = "admin"
-password = "12345678"
-port = 3306
-database = "comp4442-group-project"
 sql = "INSERT INTO DrivingRecords (DriverID,\
                                    CarPlateNumber,\
                                    recordDAY,\
@@ -33,19 +28,6 @@ sql = "INSERT INTO DrivingRecords (DriverID,\
                                    values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
 sql_delete_All_rows = "DELETE FROM DrivingRecords;"
 sql_reset_auto_increment = "ALTER TABLE DrivingRecords AUTO_INCREMENT = 1;"
-
-
-def connection():
-    # connect to database
-    conn = mysql.connector.connect(
-        host=host,
-        user=user,
-        passwd=password,
-        database=database,
-        port=port
-    )
-
-    return conn
 
 
 

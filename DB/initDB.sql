@@ -1,6 +1,7 @@
 CREATE DATABASE IF NOT EXISTS `comp4442-group-project`;
 USE `comp4442-group-project`;
 
+DROP TABLE IF EXISTS DrivingRecords;
 CREATE TABLE IF NOT EXISTS `DrivingRecords`(
     RecordID                INT             NOT NULL        AUTO_INCREMENT,
     DriverID                VARCHAR(40)     NOT NULL,
@@ -19,4 +20,13 @@ CREATE TABLE IF NOT EXISTS `DrivingRecords`(
     isHthrottleStop         DOUBLE          DEFAULT NULL,
     isOilLeak               DOUBLE          DEFAULT NULL,  
     PRIMARY KEY (RecordID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE IF EXISTS Monitor;
+CREATE TABLE IF NOT EXISTS `Monitor`(
+    MonitorID               INT             NOT NULL        AUTO_INCREMENT,
+    DriverID                VARCHAR(40)     NOT NULL,
+    Speed                   INT             NOT NULL,
+    Time                    BIGINT          NOT NULL,
+    PRIMARY KEY (MonitorID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
