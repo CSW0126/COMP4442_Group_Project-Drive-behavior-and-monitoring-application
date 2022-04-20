@@ -1,4 +1,4 @@
-#DB connection
+# DB connection
 
 import mysql.connector
 

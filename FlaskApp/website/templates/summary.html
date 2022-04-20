@@ -1,11 +1,94 @@
-{% extends "base.html" %} 
-{% block title %} Summary {% endblock %} 
+{% extends "base.html" %}
+{% block title %}Summary{% endblock %}
 {% block body %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1>Summary</h1>
-    </div>
-  </div>
-</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Summary</h1>
+            </div>
+            <section id="search_form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="" method="POST">
+                            <!--                           <div class="form-group">
+                                <label class="control-label">Start Date</label>
+                                <input class="form-control" type="text" placehoder="Start Date" name="start_date" id="startdate"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">End Date</label>
+                                <input class="form-control" type="text" placehoder="End Date" id="enddate" name="end_date"/>
+                            </div> -->
+                            <input class="form-control" type="text" name="daterange" />
+                            <br />
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <section id="search_result">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            Type something in the input field to search
+                        </p>
+                        {{ result }}
+                        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                        <br>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Driver ID</th>
+                                    <th>Car Plate Number</th>
+                                    <th>The Cumulative Number Of Times Of Rapidly Speedup</th>
+                                    <th>The Cumulative Number Of Times Of Rapidly Slowdown</th>
+                                    <th>The Cumulative Number Of Times Of neutral slide</th>
+                                    <th>The Total Time Of Neutral Slide (second)</th>
+                                    <th>The Cumulative Number Of Times Of Overspeed</th>
+                                    <th>The Total Time Of Overspeed (second)</th>
+                                    <th>The Cumulative Number Of Times Of Fatigue Driving</th>
+                                    <th>The Cumulative Number Of Times Of Hthrottle Stop</th>
+                                    <th>The Cumulative Number Of Times Of Oil Leak</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myTable">
+                                {% for result in results %}
+                                    <tr>
+                                        <td>{{ result[0] }}</td>
+                                        <td>{{ result[1] }}</td>
+                                        <td>{{ result[3] }}</td>
+                                        <td>{{ result[4] }}</td>
+                                        <td>{{ result[6] }}</td>
+                                        <td>{{ result[7] }}</td>
+                                        <td>{{ result[9] }}</td>
+                                        <td>{{ result[10] }}</td>
+                                        <td>{{ result[11] }}</td>
+                                        <td>{{ result[12] }}</td>
+                                        <td>{{ result[13] }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+      $('input[name="daterange"]').daterangepicker({
+        timePicker: true,
+        timePicker24Hour: true,
+        locale: {
+            format: 'YYYY-MM-DD hh:mm A'
+        }
+    });
+
+});
+    </script>
 {% endblock %}
