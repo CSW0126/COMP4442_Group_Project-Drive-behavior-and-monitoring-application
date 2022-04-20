@@ -29,7 +29,7 @@ def summary():
         query = "SELECT DriverID,CarPlateNumber,DATE(recordDAY),sum(isRapidlySpeedup),sum(isRapidlySlowdown),sum(isNeutralSlide),sum(isNeutralSlideFinished),sum(neutralSlideTime),sum(isOverspeed),sum(isOverspeedFinished),sum(overspeedTime),sum(isFatigueDriving),sum(isHthrottleStop),sum(isOilLeak) FROM DrivingRecords WHERE recordDAY between '" + start_datetime + "' AND '" + end_datetime + "' GROUP BY driverID"
         cursor.execute(query)
         result = cursor.fetchall()
-        return render_template("summary.html", results=result)
+        return render_template("summary.html", results=result, last_search_value=request.form['daterange'])
     else:
         return render_template("summary.html")
 
