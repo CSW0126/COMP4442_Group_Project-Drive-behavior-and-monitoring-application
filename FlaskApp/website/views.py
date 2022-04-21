@@ -1,7 +1,10 @@
+import json
+from lib2to3.pgen2 import driver
 from flask import Blueprint, render_template, request
 import sys
 import os
 from datetime import datetime
+from pymysql import NULL
 sys.path.append(os.path.abspath(
     os.path.join(os.path.dirname(__file__), '../../')))
 from DB import connection
@@ -55,6 +58,7 @@ def summary():
             OilLeakTimes.append(result[13])
         
         data = [isRapidlySpeedup,isRapidlySlowdown,NeutralSlidingTimes,TotalNeutralSlidingTimes,OverspeedTimes,TotalOverspeedTimes,FatigueDrivingTImes,HthrottleStopTimes,OilLeakTimes]
+            
         for i in data:
             print(i)
 
@@ -72,6 +76,35 @@ def summary():
                                                 )
 
 
-@views.route('/Monitor')
+
+@views.route('/Monitor', methods=['GET', 'POST'])
 def monitor():
-    return render_template("monitor.html")
+    driverID = request.args.get('driverID')
+    if driverID:
+          return render_template("monitor.html", driverID = driverID)
+    else:
+        return render_template("monitor.html")
+
+
+
+
+
+@views.route("/data")
+def getdata():
+    
+    cur = database.cursor()
+    driverID = request.args.get('driverID')
+    if driverID:
+        sql = "SELECT time, speed FROM Monitor WHERE driverID = '%s'" %(driverID)
+        cur.execute(sql)
+        datas = []
+        for i in cur.fetchall():
+            datas.append([i[0], i[1]])
+
+        if len(datas) > 0 :
+            tmp_time = datas[-1][0]
+            
+        return json.dumps(datas)
+    else:
+        return ""
+        

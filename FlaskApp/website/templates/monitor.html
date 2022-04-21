@@ -5,7 +5,75 @@
   <div class="row">
     <div class="col-md-12">
       <h1>Monitor</h1>
+      <section id="search_form">
+        <div class="row">
+            <div class="col-md-12">
+              <form action = "/Monitor" method = "GET">
+                <label for="driverID">DriverID:</label><br>
+                <input class="form-control" type="text" id="driverID" name="driverID" value="{{ driverID }}"><br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+      </section>
+      <div id="Contentcontainer" style="min-width:400px;height:400px"></div>
     </div>
   </div>
 </div>
+
+
+  <script type="text/javascript">
+
+
+$(function () {
+  $.getJSON('/data?driverID={{ driverID }}', function (data) {
+    var items = [];
+    var speeding = 80;
+    $.each(data, function (i, v) {
+        items.push(v[0]);
+    });
+
+    // Create the chart
+    $('#Contentcontainer').highcharts('StockChart', {
+      chart: {
+        events: {
+          load: function () {
+            var chart = $('#Contentcontainer').highcharts();
+            var series = chart.series[0];
+            //30 seconds interval
+            setInterval(function () {         
+              $.getJSON("/data?driverID={{ driverID }}", function (res) {
+                $.each(res, function (i, v) {
+                  if (!items.includes(v[0]) & v[1]>speeding){
+                    console.log("V : ", v[0], " + ",v[1])
+                    alert("SPEED TOO FAST");
+                    items.push(v[0]); 
+                  }
+                  series.addPoint(v);
+                });
+                console.log("item ? ", items)
+              });
+            }, 5000);
+          }
+        }
+      },
+      rangeSelector : {
+        selected : 1
+      },
+      title : {
+        text : 'Real Time Driving Speed of Driver : {{ driverID }}  '
+      },
+      series : [{
+        name : 'Speed',
+        data : data,
+        tooltip: {
+          valueDecimals: 2
+        }
+      }]
+    });
+  });
+});
+
+  </script>
+
 {% endblock %}
