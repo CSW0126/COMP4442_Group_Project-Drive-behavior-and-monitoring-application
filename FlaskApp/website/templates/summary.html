@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Summary{% endblock %}
 {% block body %}
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -27,27 +29,20 @@
             </section>
             <section id="search_result">
                 <div class="row">
-                    <div class="col-md-12">
-                        <p>
-                            Type something in the input field to search
-                        </p>
+                    <div class="col-md-12 mt-4">
+                        <!-- <p>
+                            Filter e.g. DriverID, Car Plate Number
+                        </p> -->
                         {{ result }}
-                        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                        <input class="form-control" id="myInput" type="text" placeholder="Filter e.g. DriverID, Car Plate Number..">
                         <br>
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Driver ID</th>
-                                    <th>Car Plate Number</th>
-                                    <th>The Cumulative Number Of Times Of Rapidly Speedup</th>
-                                    <th>The Cumulative Number Of Times Of Rapidly Slowdown</th>
-                                    <th>The Cumulative Number Of Times Of neutral slide</th>
-                                    <th>The Total Time Of Neutral Slide (second)</th>
-                                    <th>The Cumulative Number Of Times Of Overspeed</th>
-                                    <th>The Total Time Of Overspeed (second)</th>
-                                    <th>The Cumulative Number Of Times Of Fatigue Driving</th>
-                                    <th>The Cumulative Number Of Times Of Hthrottle Stop</th>
-                                    <th>The Cumulative Number Of Times Of Oil Leak</th>
+                                    
+                                    {% for item in headerList %}
+                                        <th>{{ item }}</th>
+                                    {% endfor %}
                                 </tr>
                             </thead>
                             <tbody id="myTable">
@@ -68,11 +63,172 @@
                                 {% endfor %}
                             </tbody>
                         </table>
+                        <select class="form-select" aria-label="Default select example" id="chartMenu" onChange="OnSelectedIndexChange()">
+                            <option selected>Open this select menu</option>
+                                {% for item in headerList %}
+                                    {% if item != "Car Plate Number" and item != "Driver ID"%}
+                                        <option value="{{ loop.index }}">{{ item }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            <!-- <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option> -->
+                          </select>
+                        <!-- <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                              Dropdown filter
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                {% for item in headerList %}
+                                    {% if item != "Car Plate Number" %}
+                                        <li><a class="dropdown-item" href="#">{{ item }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                          </div> -->
+                        <div class="mb-5 d-flex">
+                            <div class="" style="width:100%" >
+                                <canvas id="myChart"></canvas>
+                            </div>
+                            <div class="" style="width:100%">
+                                <canvas id="myChart2"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <script>
+
+
+        const tempList = '{{driverID|tojson}}'
+        const labels = JSON.parse(tempList);
+        console.log(labels);
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Bar Chart',
+                data: [],
+                backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        const CHART_COLORS = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        };
+
+        const data2 = {
+            labels: [],
+            datasets: [
+                {
+                label: 'Dataset',
+                data: [],
+                backgroundColor: CHART_COLORS,
+                }
+            ]
+        };
+        const config2 = {
+            type: 'pie',
+            data: data2,
+            options: {
+                responsive: true,
+                plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Pie Chart'
+                }
+                }
+            },
+        };
+
+      
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                y: {
+                    beginAtZero: true
+                }
+                }
+            },
+        };
+
+
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+
+        const myChart2 = new Chart(
+            document.getElementById('myChart2'),
+            config2
+        );
+
+        var dynamicColors = function() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+         };
+
+        function OnSelectedIndexChange(){
+            var selectedValue = document.getElementById("chartMenu").value;
+            console.log(selectedValue);
+            if (selectedValue != 0){
+
+                var temp = '{{chart_data|tojson}}';
+                var display_data = JSON.parse(temp);
+                data.datasets[0].data = display_data[selectedValue-3];
+                myChart.update();
+
+
+                var id_temp = '{{driverID|tojson}}';
+                var driverID=JSON.parse(id_temp)
+
+                var coloR = []
+                for (var i in driverID) {
+                    coloR.push(dynamicColors());
+                }
+
+                data2.labels = driverID;
+                data2.datasets[0].data = display_data[selectedValue-3];
+                data2.datasets[0].backgroundColor = coloR;
+                console.log(data2)
+                myChart2.update();
+            }
+
+        }
+      </script>
+
     <script type="text/javascript">
 $(document).ready(function(){
   $("#myInput").on("keyup", function() {
@@ -88,7 +244,6 @@ $(document).ready(function(){
             format: 'YYYY-MM-DD hh:mm A'
         }
     });
-
 });
     </script>
 {% endblock %}
