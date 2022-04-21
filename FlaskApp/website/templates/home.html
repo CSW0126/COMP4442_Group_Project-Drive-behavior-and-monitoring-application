@@ -2,11 +2,71 @@
 {% block title %} Home {% endblock %} 
 
 {% block body %}
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1>Home</h1>
+<style>
+.btn-get-started {
+  margin-top: 30px;
+  line-height: 0;
+  padding: 15px 40px;
+  border-radius: 4px;
+  transition: 0.5s;
+  color: #fff;
+  background: #4154f1;
+  box-shadow: 0px 5px 30px rgba(65, 84, 241, 0.4);
+  text-decoration: none;
+}
+.btn-get-started span {
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+.btn-get-started i {
+  margin-left: 5px;
+  font-size: 18px;
+  transition: 0.3s;
+}
+.btn-get-started:hover i {
+  transform: translateX(5px);
+}
+</style>
+  <!-- Vendor CSS Files -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+
+  <section class="p-5 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">COMP4442 Group Project</h1>
+          <h5 class="mt-2" data-aos="fade-up" data-aos-delay="400">a) Generate a summary to show the driving behavior of all drivers.</h5>
+          <h5 class="mt-2" data-aos="fade-up" data-aos-delay="500">b) Monitor the driving speed of each driver in real time.</h5>
+          <div class="mt-2" data-aos="fade-up" data-aos-delay="600">
+            <div class="text-center text-lg-start">
+              <a href="/Summary" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>Summary&nbsp; &nbsp; </span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                </svg>
+              </a>
+            </div>
+            <div class="text-center text-lg-start">
+              <a href="/Monitor" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>Monitor&nbsp; &nbsp; </span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" class="img-fluid" alt="">
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
+<script>
+  AOS.init();
+</script>
 {% endblock %}
