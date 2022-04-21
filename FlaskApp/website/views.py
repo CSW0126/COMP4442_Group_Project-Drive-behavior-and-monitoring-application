@@ -91,11 +91,11 @@ def monitor():
 
 @views.route("/data")
 def getdata():
-    
+    database = connection.connection()
     cur = database.cursor()
     driverID = request.args.get('driverID')
     if driverID:
-        sql = "SELECT time, speed FROM Monitor WHERE driverID = '%s'" %(driverID)
+        sql = "SELECT Time, Speed FROM Monitor WHERE DriverID = '%s'" %(driverID)
         cur.execute(sql)
         datas = []
         for i in cur.fetchall():

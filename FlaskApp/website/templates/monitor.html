@@ -25,54 +25,59 @@
   <script type="text/javascript">
 
 
-$(function () {
-  $.getJSON('/data?driverID={{ driverID }}', function (data) {
-    var items = [];
-    var speeding = 80;
-    $.each(data, function (i, v) {
-        items.push(v[0]);
-    });
 
-    // Create the chart
-    $('#Contentcontainer').highcharts('StockChart', {
-      chart: {
-        events: {
-          load: function () {
-            var chart = $('#Contentcontainer').highcharts();
-            var series = chart.series[0];
-            //30 seconds interval
-            setInterval(function () {         
-              $.getJSON("/data?driverID={{ driverID }}", function (res) {
-                $.each(res, function (i, v) {
-                  if (!items.includes(v[0]) & v[1]>speeding){
-                    console.log("V : ", v[0], " + ",v[1])
-                    alert("SPEED TOO FAST");
-                    items.push(v[0]); 
-                  }
-                  series.addPoint(v);
-                });
-                console.log("item ? ", items)
-              });
-            }, 5000);
-          }
-        }
-      },
-      rangeSelector : {
-        selected : 1
-      },
-      title : {
-        text : 'Real Time Driving Speed of Driver : {{ driverID }}  '
-      },
-      series : [{
-        name : 'Speed',
-        data : data,
-        tooltip: {
-          valueDecimals: 2
-        }
-      }]
+    $(function () {
+      $.getJSON('/data?driverID={{ driverID }}', function (data) {
+        var items = [];
+        var speeding = 80;
+        
+        $.each(data, function (i, v) {
+          items.push(v[0]); 
+        });
+    
+        // Create the chart
+        $('#Contentcontainer').highcharts('StockChart', {
+          chart: {
+            events: {
+              load: function () {
+                var chart = $('#Contentcontainer').highcharts();
+                var series = chart.series[0];
+                //30 seconds interval
+                setInterval(function () {         
+                  $.getJSON("/data?driverID={{ driverID }}", function (res) {
+                    var showalert = false;
+                    var newitems = [];
+                    $.each(res, function (i, v) {
+                      if (!items.includes(v[0]) & v[1]>speeding){
+                        showalert = true;
+                        items.push(v[0]); 
+                      }
+                      series.addPoint(v);
+                    });
+                    if(showalert == true ){
+                      alert("Your Speed is so fast!");
+                    }
+                  });
+                }, 30000);
+              }
+            }
+          },
+          rangeSelector : {
+            selected : 1
+          },
+          title : {
+            text : 'Real Time Driving Speed : {{ driverID }}'
+          },
+          series : [{
+            name : 'Speed',
+            data : data,
+            tooltip: {
+              valueDecimals: 2
+            }
+          }]
+        });
+      });
     });
-  });
-});
 
   </script>
 
