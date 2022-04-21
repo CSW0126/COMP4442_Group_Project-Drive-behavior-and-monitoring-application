@@ -65,7 +65,11 @@ def summary():
                                                 last_search_value=request.form['daterange'])
          
     else:
-        return render_template("summary.html", headerList = list)
+        return render_template("summary.html", headerList = list,\
+                                                results=[],\
+                                                driverID=[] ,\
+                                                chart_data = [],\
+                                                )
 
 
 @views.route('/Monitor')
