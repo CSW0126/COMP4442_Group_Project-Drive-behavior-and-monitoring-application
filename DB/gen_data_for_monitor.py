@@ -4,7 +4,8 @@ from connection import connection
 
 def generate_data():
     DriverID = 'COMP4442'
-    Speed = 1*random.randint(0,10)+ 10*random.randint(5,9)
+    Speed = 1*random.randint(0,10)+ 10*random.randint(5,7)
+    #Speed = 1*random.randint(0,10)+ 10*random.randint(8,10)  
     Time = int(time.time())
     data = [DriverID,Speed,Time]
 
