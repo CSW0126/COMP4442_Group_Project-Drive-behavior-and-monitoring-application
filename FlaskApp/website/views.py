@@ -1,10 +1,8 @@
 import json
-from lib2to3.pgen2 import driver
 from flask import Blueprint, render_template, request
 import sys
 import os
 from datetime import datetime
-from pymysql import NULL
 sys.path.append(os.path.abspath(
     os.path.join(os.path.dirname(__file__), '../../')))
 from DB import connection
