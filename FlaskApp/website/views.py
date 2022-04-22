@@ -29,7 +29,7 @@ def connection():
     return conn
 
 
-database = connection()
+
 
 # define url
 
@@ -41,6 +41,7 @@ def home():
 
 @views.route('/Summary', methods=['GET', 'POST'])
 def summary():
+    database = connection()
     list = ['Driver ID', 'Car Plate Number', 'Abrupt acceleration times', 'Abrupt Brake Times', 'Neutral Sliding Times', 'Total Neutral Sliding Times (s)', 'Overspeed Times', 'Total Overspeed Times(s)', 'Fatigue Driving TImes', 'Hthrottle Stop Times', 'Oil Leak Times']
     if request.method == 'POST':
         cursor = database.cursor()
