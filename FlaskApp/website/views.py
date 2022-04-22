@@ -1,14 +1,35 @@
 import json
 from flask import Blueprint, render_template, request
-import sys
-import os
 from datetime import datetime
-sys.path.append(os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '../../')))
-from DB import connection
+# sys.path.append(os.path.abspath(
+#     os.path.join(os.path.dirname(__file__), '../../')))
+# from DB import connection
 views = Blueprint('views', __name__)
 
-database = connection.connection()
+# DB connection
+
+import mysql.connector
+
+host = "comp4442-group-project.coa9uj3ys1py.us-east-1.rds.amazonaws.com"
+user = "admin"
+password = "12345678"
+port = 3306
+database = "comp4442-group-project"
+
+def connection():
+    # connect to database
+    conn = mysql.connector.connect(
+        host=host,
+        user=user,
+        passwd=password,
+        database=database,
+        port=port
+    )
+
+    return conn
+
+
+database = connection()
 
 # define url
 
@@ -89,11 +110,11 @@ def monitor():
 
 @views.route("/data")
 def getdata():
-    database = connection.connection()
+    database = connection()
     cur = database.cursor()
     driverID = request.args.get('driverID')
     if driverID:
-        sql = "SELECT Time, Speed FROM Monitor WHERE DriverID = '%s'" %(driverID)
+        sql = "SELECT Time, Speed FROM Monitor WHERE DriverID = '"+driverID+"'"
         cur.execute(sql)
         datas = []
         for i in cur.fetchall():
