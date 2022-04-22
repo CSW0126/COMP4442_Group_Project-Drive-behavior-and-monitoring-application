@@ -31,9 +31,11 @@
         var items = [];
         var speeding = 80;
         
-        $.each(data, function (i, v) {
-          items.push(v[0]); 
-        });
+
+          $.each(data, function (i, v) {
+            items.push(v[0]); 
+          });
+      
     
         // Create the chart
         $('#Contentcontainer').highcharts('StockChart', {
@@ -58,7 +60,7 @@
                       alert("Your Speed is so fast!");
                     }
                   });
-                }, 30000);
+                }, 5000);
               }
             }
           },
