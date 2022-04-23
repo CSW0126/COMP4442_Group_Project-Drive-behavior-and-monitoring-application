@@ -15,7 +15,7 @@
                               <option value="{{ item[0] }}">{{ item[1] }}</option>
                       {% endfor %}
                 </select>
-                <input class="form-control" type="text" name="daterange" value="{% if last_search_value %} {{ last_search_value }} {% else %} 2017-01-01 12:00 AM - 2017-01-11 11:59 PM {% endif %}"/>
+                <input class="form-control" type="text" name="daterange" id="daterange" value="{% if last_search_value %} {{ last_search_value }} {% else %} 2017-01-01 12:00 AM - 2017-01-11 11:59 PM {% endif %}"/>
                 <br />
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -37,9 +37,8 @@
                 format: 'YYYY-MM-DD hh:mm A'
             }
         });
-
-        $.getJSON('/OldRecorddata?driverID={{ driverID }}&daterange={{ daterange }}', function (data) {     
-          console.log(data);
+        var value = document.getElementById('daterange').value;
+        $.getJSON('/OldRecorddata?driverID={{ driverID }}&daterange='+value, function (data) {     
           if(data != null){
           // Create the chart
           $('#Contentcontainer').highcharts('StockChart', {

@@ -155,7 +155,7 @@ def getOlddata():
     driverID = request.args.get('driverID')   
     print(driverID)
     if driverID:
-        daterange = request.args.get('daterange')
+        daterange = request.args.get('daterange').split(' - ', 1)
         print(daterange)
         start_datetime = str(datetime.strptime(daterange[0], '%Y-%m-%d %I:%M %p'))
         end_datetime = str(datetime.strptime(daterange[1], '%Y-%m-%d %I:%M %p'))
@@ -164,13 +164,11 @@ def getOlddata():
         datas = []
         for i in cur.fetchall():
             dt = i[2]
-            datas.append([i[0], i[1] , int(dt.strftime("%Y%m%d%H%M%S"))])       
+            datas.append([ i[1] , int(dt.strftime("%Y%m%d%H%M%S"))])       
         if len(datas) > 0 :
             tmp_time = datas[-1][0]      
-        print(datas)    
+            
         return json.dumps(datas)
     else:
         return ""
       
-def to_integer(dt_time):
-    return 10000*dt_time.year + 100*dt_time.month + dt_time.day
