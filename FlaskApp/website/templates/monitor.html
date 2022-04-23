@@ -4,6 +4,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
+      <div id="liveAlertPlaceholder"></div>
       <h1>Monitor</h1>
       <section id="search_form">
         <div class="row">
@@ -31,11 +32,9 @@
         var items = [];
         var speeding = 80;
         
-
           $.each(data, function (i, v) {
             items.push(v[0]); 
           });
-      
     
         // Create the chart
         $('#Contentcontainer').highcharts('StockChart', {
@@ -57,7 +56,7 @@
                       series.addPoint(v);
                     });
                     if(showalert == true ){
-                      alert("Speed is so fast!");
+                      alert("Speed too fast!!!", "danger");
                     }
                   });
                 }, 30000);
@@ -80,6 +79,16 @@
         });
       });
     });
+
+
+    var alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+
+    function alert(message, type) {
+      var wrapper = document.createElement('div')
+      wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
+
+      alertPlaceholder.append(wrapper)
+    }
 
   </script>
 
