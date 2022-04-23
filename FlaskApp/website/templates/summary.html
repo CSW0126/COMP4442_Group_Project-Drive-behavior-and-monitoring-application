@@ -20,7 +20,7 @@
                                 <label class="control-label">End Date</label>
                                 <input class="form-control" type="text" placehoder="End Date" id="enddate" name="end_date"/>
                             </div> -->
-                            <input class="form-control" type="text" name="daterange" value="{{ last_search_value }}"/>
+                            <input class="form-control" type="text" name="daterange" value="{% if last_search_value %} {{ last_search_value }} {% else %} 2017-01-01 12:00 AM - 2017-01-11 11:59 PM {% endif %}"/>
                             <br />
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
