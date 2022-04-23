@@ -3,13 +3,13 @@
 {% block body %}
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 ">
       <div id="liveAlertPlaceholder"></div>
       <h1>Monitor</h1>
       <section id="search_form">
         <div class="row">
             <div class="col-md-12">
-              <form action = "/Monitor" method = "GET">
+              <form action = "" method = "GET">
                 <label for="driverID">DriverID:</label><br>
                 <input class="form-control" type="text" id="driverID" name="driverID" value="{{ driverID }}"><br>
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -31,7 +31,7 @@
       $.getJSON('/data?driverID={{ driverID }}', function (data) {
         var items = [];
         var speeding = 80;
-        
+        console.log(data)
           $.each(data, function (i, v) {
             items.push(v[0]); 
           });
@@ -47,7 +47,6 @@
                 setInterval(function () {         
                   $.getJSON("/data?driverID={{ driverID }}", function (res) {
                     var showalert = false;
-                    var newitems = [];
                     $.each(res, function (i, v) {
                       if (!items.includes(v[0]) & v[1]>speeding){
                         showalert = true;

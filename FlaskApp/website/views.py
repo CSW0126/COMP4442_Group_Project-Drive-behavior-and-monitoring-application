@@ -1,6 +1,8 @@
 import json
 from flask import Blueprint, render_template, request
 from datetime import datetime
+
+from pymysql import NULL
 # sys.path.append(os.path.abspath(
 #     os.path.join(os.path.dirname(__file__), '../../')))
 # from DB import connection
@@ -119,12 +121,56 @@ def getdata():
         cur.execute(sql)
         datas = []
         for i in cur.fetchall():
-            datas.append([i[0], i[1]])
-
+            datas.append([i[0], i[1]])       
+ 
         if len(datas) > 0 :
             tmp_time = datas[-1][0]
             
         return json.dumps(datas)
     else:
         return ""
-        
+    
+
+
+@views.route('/MonitorRecord', methods=['GET', 'POST'])
+def MonitorRecord():
+    database = connection()
+    cur = database.cursor()
+    sql = "SELECT DISTINCT driverID, CarPlateNumber FROM MonitorOldData"
+    cur.execute(sql)
+    datas = []
+    for i in cur.fetchall():
+        datas.append([i[0], i[1]])       
+    driverID = request.args.get('driverID')   
+    if driverID:
+          return render_template("monitorForOldData.html", driverID = driverID, driverList = datas)
+    else:
+        return render_template("monitorForOldData.html", driverList = datas )       
+    
+@views.route("/OldRecorddata", methods=['GET', 'POST'])
+def getOlddata():
+    print("run get old data")
+    database = connection()
+    cur = database.cursor()
+    driverID = request.args.get('driverID')   
+    print(driverID)
+    if driverID:
+        daterange = request.args.get('daterange')
+        print(daterange)
+        start_datetime = str(datetime.strptime(daterange[0], '%Y-%m-%d %I:%M %p'))
+        end_datetime = str(datetime.strptime(daterange[1], '%Y-%m-%d %I:%M %p'))
+        sql = "SELECT CarPlateNumber, Speed, DATE(recordDAY) FROM MonitorOldData WHERE recordDAY between '" + start_datetime + "' AND '" + end_datetime + "' AND DriverID = '"+driverID+"'"
+        cur.execute(sql)
+        datas = []
+        for i in cur.fetchall():
+            dt = i[2]
+            datas.append([i[0], i[1] , int(dt.strftime("%Y%m%d%H%M%S"))])       
+        if len(datas) > 0 :
+            tmp_time = datas[-1][0]      
+        print(datas)    
+        return json.dumps(datas)
+    else:
+        return ""
+      
+def to_integer(dt_time):
+    return 10000*dt_time.year + 100*dt_time.month + dt_time.day

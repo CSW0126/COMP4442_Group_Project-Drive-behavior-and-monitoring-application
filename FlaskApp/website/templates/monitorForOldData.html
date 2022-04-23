@@ -1,0 +1,80 @@
+{% extends "base.html" %} 
+{% block title %} Monitor {% endblock %} 
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 ">
+      <h1>MonitorRecord</h1>
+      <section id="search_form">
+        <div class="row">
+            <div class="col-md-12">
+              <form action="" method="GET">
+                <select class="form-select" aria-label="Default select example" id="driverID" name="driverID" >
+                  <option selected>Select a driver</option>
+                      {% for item in driverList %}
+                              <option value="{{ item[0] }}">{{ item[1] }}</option>
+                      {% endfor %}
+                </select>
+                <input class="form-control" type="text" name="daterange" value="{% if last_search_value %} {{ last_search_value }} {% else %} 2017-01-01 12:00 AM - 2017-01-11 11:59 PM {% endif %}"/>
+                <br />
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            </div>
+          </div>
+      </section>
+      <div id="Contentcontainer" style="min-width:400px;height:400px"></div>
+    </div>
+  </div>
+</div>
+
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+          $('input[name="daterange"]').daterangepicker({
+            timePicker: true,
+            timePicker24Hour: true,
+            locale: {
+                format: 'YYYY-MM-DD hh:mm A'
+            }
+        });
+
+        $.getJSON('/OldRecorddata?driverID={{ driverID }}&daterange={{ daterange }}', function (data) {     
+          console.log(data);
+          if(data != null){
+          // Create the chart
+          $('#Contentcontainer').highcharts('StockChart', {
+            chart: {
+              events: {
+                load: function () {
+                  var chart = $('#Contentcontainer').highcharts();
+                  var series = chart.series[0];
+                  //30 seconds interval      
+                      $.each(data, function (i, v) {
+                        pprint(v)
+                        series.addPoint(v);
+                      });
+                }
+              }
+            },
+            rangeSelector: {
+              enabled: false
+          },
+            title : {
+              text : 'Real Time Driving Speed : {{ driverID }}'
+            },
+            series : [{
+              name : 'Speed',
+              data : data,
+              tooltip: {
+                valueDecimals: 2
+              }
+            }]
+          });
+        }
+        });  
+    });
+
+
+  </script>
+
+{% endblock %}
