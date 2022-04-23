@@ -149,7 +149,7 @@ def MonitorRecord():
     
 @views.route("/OldRecorddata", methods=['GET', 'POST'])
 def getOlddata():
-    print("run get old data")
+
     database = connection()
     cur = database.cursor()
     driverID = request.args.get('driverID')   
@@ -164,10 +164,12 @@ def getOlddata():
         datas = []
         for i in cur.fetchall():
             dt = i[2]
-            datas.append([  int(dt.strftime("%Y%m%d%H%M%S")) , i[1] ])       
+            datas.append([ int(dt.strftime("%Y%m%d%H%M%S")) , i[1] ])             
+            
         if len(datas) > 0 :
             tmp_time = datas[-1][0]      
-            
+        
+        print(datas)    
         return json.dumps(datas)
     else:
         return ""
