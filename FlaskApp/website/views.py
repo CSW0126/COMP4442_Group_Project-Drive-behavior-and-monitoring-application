@@ -164,7 +164,7 @@ def getOlddata():
         datas = []
         for i in cur.fetchall():
             dt = i[2]
-            datas.append([ i[1] , int(dt.strftime("%Y%m%d%H%M%S"))])       
+            datas.append([  int(dt.strftime("%Y%m%d%H%M%S")) , i[1] ])       
         if len(datas) > 0 :
             tmp_time = datas[-1][0]      
             
