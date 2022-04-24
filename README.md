@@ -46,6 +46,7 @@ python main.py
     │    ├── Spark_aws_EMR.py        # Spark code on AWS EMR
     │    ├── spark_colab.ipynb       # Spark code on Google Colab (for testing,debug etc)
     │    ├── gen_data_for_monitor.py # generate data and insert to monitor table
+    │    ├── readData.py             # upload given speed data to DB
     │    └── upload_data_to_DB.py    # read the csv in data-after-spark and upload to DB
     ├── detail-record                # original data set
     ├── FlaskApp                     # Folder for Flask app code
@@ -54,5 +55,8 @@ python main.py
     │   │      ├── templates         # All html files put here
     │   │      ├── __init__.py       # Flask init code
     │   │      └── views.py          # code for define URL route
-    │   └── main.py                  # main.py
+    │   └── application.py           # main.py
+    ├── website.zip                  # zip file used to upload to AWS Elastic Beanstalk
+    ├── Demo Video.mp4               # Demo video
+    ├── Report.pdf                   # Report document    
     └── ...
