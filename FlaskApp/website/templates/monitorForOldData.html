@@ -15,7 +15,7 @@
                       {% endfor %}
                 </select>
                 <br />
-                <input class="form-control" type="text" name="daterange" id="daterange" value="{% if last_search_value %} {{ last_search_value }} {% else %} 2017-01-03 06:00 PM - 2017-01-03 06:05 PM {% endif %}"/>
+                <input class="form-control" type="text" name="daterange" id="daterange" value="{% if last_search_value %} {{ last_search_value }} {% else %} 2017-01-01 12:00 AM - 2017-01-03 23:59 PM {% endif %}"/>
                 <br />
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -85,6 +85,9 @@
             series : [{
               name : 'Speed',
               data : data,
+            tooltip: {
+              valueSuffix: 'Km/h'
+            }
             }]
           });
         }

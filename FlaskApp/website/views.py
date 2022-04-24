@@ -120,7 +120,7 @@ def getdata():
         cur.execute(sql)
         datas = []
         for i in cur.fetchall():
-            datas.append([i[0], i[1]])       
+            datas.append([i[0] * 1000, i[1]])       
  
         if len(datas) > 0 :
             tmp_time = datas[-1][0]
