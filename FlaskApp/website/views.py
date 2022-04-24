@@ -126,6 +126,8 @@ def getdata():
         if len(datas) > 0 :
             tmp_time = datas[-1][0]
             
+        print(datas)    
+        
         return json.dumps(datas)
     else:
         return ""
@@ -143,9 +145,9 @@ def MonitorRecord():
         datas.append([i[0], i[1]])       
     driverID = request.args.get('driverID')   
     if driverID:
-          return render_template("monitorForOldData.html", driverID = driverID, driverList = datas)
+          return render_template("monitorForOldData.html", driverID = driverID, driverList = datas, last_search_value=request.args.get('daterange'))
     else:
-        return render_template("monitorForOldData.html", driverList = datas )       
+        return render_template("monitorForOldData.html", driverList = datas, last_search_value=request.args.get('daterange'))       
     
 @views.route("/OldRecorddata", methods=['GET', 'POST'])
 def getOlddata():
@@ -157,14 +159,15 @@ def getOlddata():
     if driverID:
         daterange = request.args.get('daterange').split(' - ', 1)
         print(daterange)
-        start_datetime = str(datetime.strptime(daterange[0], '%Y-%m-%d %I:%M %p'))
-        end_datetime = str(datetime.strptime(daterange[1], '%Y-%m-%d %I:%M %p'))
-        sql = "SELECT CarPlateNumber, Speed, DATE(recordDAY) FROM MonitorOldData WHERE recordDAY between '" + start_datetime + "' AND '" + end_datetime + "' AND DriverID = '"+driverID+"'"
+        start_datetime = datetime.strptime(daterange[0], '%Y-%m-%d %I:%M %p')
+        end_datetime = datetime.strptime(daterange[1], '%Y-%m-%d %I:%M %p')
+        sql = "SELECT CarPlateNumber, Speed, recordDAY FROM MonitorOldData WHERE recordDAY between '" + str(start_datetime) + "' AND '" + str(end_datetime) + "' AND DriverID = '"+driverID+"' ORDER BY recordDAY"
+        print(sql)
         cur.execute(sql)
         datas = []
         for i in cur.fetchall():
-            dt = i[2]
-            datas.append([ int(dt.strftime("%Y%m%d%H%M%S")) , i[1] ])             
+            dt = i[2].timestamp() * 1000
+            datas.append([ dt , i[1] ])             
             
         if len(datas) > 0 :
             tmp_time = datas[-1][0]      

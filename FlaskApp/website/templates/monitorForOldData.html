@@ -10,11 +10,11 @@
             <div class="col-md-12">
               <form action="" method="GET">
                 <select class="form-select" aria-label="Default select example" id="driverID" name="driverID" >
-                  <option selected>Select a driver</option>
                       {% for item in driverList %}
-                              <option value="{{ item[0] }}">{{ item[1] }}</option>
+                              <option value="{{ item[0] }}">{{ item[0] }}</option>
                       {% endfor %}
                 </select>
+                <br />
                 <input class="form-control" type="text" name="daterange" id="daterange" value="{% if last_search_value %} {{ last_search_value }} {% else %} 2017-01-03 06:00 PM - 2017-01-03 06:05 PM {% endif %}"/>
                 <br />
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -55,8 +55,24 @@
                 }
               }
             },
+              time: {
+    useUTC: false
+  },
             rangeSelector: {
-              enabled: false
+   buttons: [{
+      count: 1,
+      type: 'minute',
+      text: '1M'
+    }, {
+      count: 5,
+      type: 'minute',
+      text: '5M'
+    }, {
+      type: 'all',
+      text: 'All'
+    }],
+    inputEnabled: false,
+    selected: 0
           },
             title : {
               text : 'Real Time Driving Speed : {{ driverID }}'
@@ -64,9 +80,6 @@
             series : [{
               name : 'Speed',
               data : data,
-              tooltip: {
-                valueDecimals: 2
-              }
             }]
           });
         }

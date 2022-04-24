@@ -44,7 +44,7 @@
                 var series = chart.series[0];
                 //30 seconds interval
                 setInterval(function () {         
-                  $.getJSON("/data?driverID={{ driverID }}", function (res) {
+                  $.getJSON("/OldRecorddata?driverID={{ driverID }}", function (res) {
                     var showalert = false;
                     $.each(res, function (i, v) {
                       if (!items.includes(v[0]) & v[1]>speeding){
