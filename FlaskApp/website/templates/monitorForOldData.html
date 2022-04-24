@@ -11,7 +11,7 @@
               <form action="" method="GET">
                 <select class="form-select" aria-label="Default select example" id="driverID" name="driverID" >
                       {% for item in driverList %}
-                              <option value="{{ item[0] }}">{{ item[0] }}</option>
+                              <option value="{{ item[0] }}">{{ item[0] + " / " + item[1] }}</option>
                       {% endfor %}
                 </select>
                 <br />

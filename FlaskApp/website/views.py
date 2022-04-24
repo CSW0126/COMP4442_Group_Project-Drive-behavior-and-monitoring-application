@@ -2,7 +2,6 @@ import json
 from flask import Blueprint, render_template, request
 from datetime import datetime
 
-from pymysql import NULL
 # sys.path.append(os.path.abspath(
 #     os.path.join(os.path.dirname(__file__), '../../')))
 # from DB import connection

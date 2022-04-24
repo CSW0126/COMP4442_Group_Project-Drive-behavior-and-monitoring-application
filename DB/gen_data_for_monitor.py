@@ -3,9 +3,9 @@ import time
 from connection import connection
 
 def generate_data():
-    DriverID = 'COMP4442'
-    Speed = 1*random.randint(0,10)+ 10*random.randint(5,7)
-    #Speed = 1*random.randint(0,10)+ 10*random.randint(8,10)  
+    DriverID = 'shenxian1000004'
+    #Speed = 1*random.randint(0,10)+ 10*random.randint(5,7)
+    Speed = 1*random.randint(0,10)+ 10*random.randint(5,10)  
     Time = int(time.time())
     data = [DriverID,Speed,Time]
 
