@@ -66,7 +66,33 @@
     useUTC: false
   },
           rangeSelector: {
-            enabled: false
+   buttons: [
+   {
+      count: 30,
+      type: 'second',
+      text: '30S'
+          }, {
+      count: 1,
+      type: 'minute',
+      text: '1M'
+    }, {
+      count: 5,
+      type: 'minute',
+      text: '5M'
+    }, {
+      count: 1,
+      type: 'hour',
+      text: '1H'
+    }, {
+      count: 12,
+      type: 'hour',
+      text: '12H'
+    }, {
+      type: 'all',
+      text: 'All'
+    }],
+    inputEnabled: false,
+    selected: 0
         },
           title : {
             text : 'Real Time Driving Speed : {{ driverID }}'
