@@ -1,2 +1,3 @@
-FlaskApp/website/__pycache__
+FlaskApp/website/__pycache__/
 *.pyc
+DB/__pycache__/
