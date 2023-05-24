@@ -1,4 +1,10 @@
-# COMP4442_Group_Project
+# COMP4442_Group_Project - Drive behavior and monitoring application
+
+<img src="https://img.shields.io/badge/Python-%20-green">&nbsp;
+<img src="https://img.shields.io/badge/Flask-%20-green">&nbsp;
+<img src="https://img.shields.io/badge/HTML&CSS-%20-green">&nbsp;
+<img src="https://img.shields.io/badge/MySQL-%20-green">&nbsp;
+<img src="https://img.shields.io/badge/AWS%20Spark-%20-green">&nbsp;
 
 1. Install [Anaconda](https://www.anaconda.com/)
 2. Click Environment > Create > tick Python 3.10.4
@@ -60,3 +66,19 @@ python main.py
     ├── Demo Video.mp4               # Demo video
     ├── Report.pdf                   # Report document    
     └── ...
+    
+
+## Documentation
+[Link](Report.pdf)
+
+## Some screenshots
+Dashboard:
+<img src='Img/main.jpg'>
+Data Summary:
+<img src='Img/Summary.jpg'>
+Summary Chart:
+<img src='Img/SummaryChart.jpg'>
+Real Time Monitor:
+<img src='Img/RealTimeMonitor.jpg'>
+Real Time Monitor with Error Message:
+<img src='Img/RealTimeMonitor2.jpg'>
